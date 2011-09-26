@@ -1,4 +1,4 @@
-package com.shine.app.game.colorlines.algorithm.astar;
+package com.shine.app.game.colorlines.algorithm.run;
 
 import java.awt.Graphics;
 import java.awt.Image;

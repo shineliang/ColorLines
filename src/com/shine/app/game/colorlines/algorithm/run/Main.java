@@ -1,4 +1,4 @@
-package com.shine.app.game.colorlines.algorithm.astar;
+package com.shine.app.game.colorlines.algorithm.run;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.shine.app.game.colorlines.algorithm.astar.Node;
+import com.shine.app.game.colorlines.algorithm.astar.PathFinder;
 
 public class Main extends JPanel {
 	final static private long serialVersionUID = 1L;

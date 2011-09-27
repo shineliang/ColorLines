@@ -8,75 +8,83 @@ import com.shine.app.game.colorlines.ui.exception.InvalidIconPathException;
 public enum CellType {
 
 	/**
-	 * Support 7 types
+	 * Support 6 types + 1 empty
 	 */
 	T0 {
 		@Override
 		public Icon getImage() {
-			return getImage(null);
+			filePath = null;
+			return getIconImage();
 		}
 	},
 	T1 {
 		@Override
 		public Icon getImage() {
-			return getImage(getFullPath("1.gif"));
+			filePath = "1.gif";
+			return getIconImage();
 		}
 	},
 	T2 {
 		@Override
 		public Icon getImage() {
-			return getImage(getFullPath("2.gif"));
+			filePath = "2.gif";
+			return getIconImage();
 		}
 	},
 	T3 {
 		@Override
 		public Icon getImage() {
-			return getImage(getFullPath("3.gif"));
+			filePath = "3.gif";
+			return getIconImage();
 		}
 	},
 	T4 {
 		@Override
 		public Icon getImage() {
-			return getImage(getFullPath("4.gif"));
+			filePath = "4.gif";
+			return getIconImage();
 		}
 	},
 	T5 {
 		@Override
 		public Icon getImage() {
-			return getImage(getFullPath("5.gif"));
+			filePath = "5.gif";
+			return getIconImage();
 		}
 	},
 	T6 {
 		@Override
 		public Icon getImage() {
-			return getImage(getFullPath("6.gif"));
-		}
-	},
-	T7 {
-		@Override
-		public Icon getImage() {
-			return getImage(getFullPath("7.gif"));
+			filePath = "6.gif";
+			return getIconImage();
 		}
 	};
 
 	private static final String pathPrefix = "skin/default/";
-	private Icon image = null;
+	protected Icon image = null;
+	protected String filePath = null;
 
 	public abstract Icon getImage();
 
-	protected String getFullPath(String fileName) {
-		if (fileName == null || pathPrefix == null) {
+	private String getFullPath(String fileName) {
+		if (pathPrefix == null) {
 			throw new InvalidIconPathException();
 		}
 		return pathPrefix + fileName;
 	}
 
-	protected Icon getImage(String path) {
+	private Icon getIconImage(String path) {
+		if (path == null)
+			image = new ImageIcon();
+		else
+			image = new ImageIcon(path);
+
+		return image;
+	}
+
+	protected Icon getIconImage() {
 		if (image == null)
-			if (path == null)
-				image = new ImageIcon();
-			else
-				image = new ImageIcon(path);
+			image = getIconImage(getFullPath(filePath));
 
 		return image;
 	}

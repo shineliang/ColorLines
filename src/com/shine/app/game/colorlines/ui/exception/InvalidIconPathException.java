@@ -1,6 +1,6 @@
 package com.shine.app.game.colorlines.ui.exception;
 
-public class InvalidIconPathException extends RuntimeException {
+public class InvalidIconPathException extends ColorLinesRuntimeException {
 
 	/**
 	 * 

@@ -100,7 +100,7 @@ public class PathFinder {
 	 */
 	private boolean isHit(int x, int y) {
 		for (int i : limit) {
-			if (map[y][x] == i) {
+			if (map[x][y] == i) {
 				return true;
 			}
 		}

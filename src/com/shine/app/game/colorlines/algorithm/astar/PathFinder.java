@@ -99,8 +99,17 @@ public class PathFinder {
 	 * @return
 	 */
 	private boolean isHit(int x, int y) {
+
+		if (y < 0 || y >= map.length) {
+			return true;
+		}
+
+		if (x < 0 || x >= map[y].length) {
+			return true;
+		}
+
 		for (int i : limit) {
-			if (map[x][y] == i) {
+			if (map[y][x] == i) {
 				return true;
 			}
 		}

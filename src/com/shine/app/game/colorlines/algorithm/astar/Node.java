@@ -4,8 +4,6 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.shine.app.game.colorlines.ui.UiConstants;
-
 public class Node implements Comparable<Node> {
 
 	// 坐标
@@ -85,23 +83,19 @@ public class Node implements Comparable<Node> {
 		int y = position.y;
 		// 上下左右各点间移动区域(对于斜视地图，可以开启注释的偏移部分，此时将评估8个方位)
 		// 上
-		if (y > 0)
-			limit.add(new Node(new Point(x, y - 1)));
+		limit.add(new Node(new Point(x, y - 1)));
 		// 右上
 		// limit.add(new Node(new Point(x+1, y-1)));
 		// 右
-		if (x < UiConstants.X_SIZE - 1)
-			limit.add(new Node(new Point(x + 1, y)));
+		limit.add(new Node(new Point(x + 1, y)));
 		// 右下
 		// limit.add(new Node(new Point(x+1, y+1)));
 		// 下
-		if (y < UiConstants.Y_SIZE - 1)
-			limit.add(new Node(new Point(x, y + 1)));
+		limit.add(new Node(new Point(x, y + 1)));
 		// 左下
 		// limit.add(new Node(new Point(x-1, y+1)));
 		// 左
-		if (x > 0)
-			limit.add(new Node(new Point(x - 1, y)));
+		limit.add(new Node(new Point(x - 1, y)));
 		// 左上
 		// limit.add(new Node(new Point(x-1, y-1)));
 		return limit;

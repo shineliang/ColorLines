@@ -7,7 +7,6 @@ import java.util.List;
 import com.shine.app.game.colorlines.ui.Cell;
 import com.shine.app.game.colorlines.ui.ChessBoard;
 import com.shine.app.game.colorlines.ui.GridBase;
-import com.shine.app.game.colorlines.ui.UiConstants;
 
 public class PathFinderAdapter implements ICellPathFinder {
 
@@ -17,14 +16,14 @@ public class PathFinderAdapter implements ICellPathFinder {
 	public List<Cell> searchPath(Cell start, Cell end) {
 		GridBase gridBase = ChessBoard.getInstance().getGridBase();
 		PathFinder finder = new PathFinder(gridBase.buildPathMap(), HIT);
-		Point startPos = new Point(start.getX() / UiConstants.CELL_WIDTH,
-				start.getY() / UiConstants.CELL_HEIGHT);
-		Point endPos = new Point(end.getX() / UiConstants.CELL_WIDTH,
-				end.getY() / UiConstants.CELL_HEIGHT);
+		Point startPos = new Point(start.getXPos(), start.getYPos());
+		Point endPos = new Point(end.getXPos(), end.getYPos());
 		List<Node> nodeList = finder.searchPath(startPos, endPos);
 		List<Cell> cellList = new LinkedList<Cell>();
-		for (Node node : nodeList) {
-			cellList.add(gridBase.getCell(node.position.x, node.position.y));
+		if (nodeList != null) {
+			for (Node node : nodeList) {
+				cellList.add(gridBase.getCell(node.position.x, node.position.y));
+			}
 		}
 		return cellList;
 	}

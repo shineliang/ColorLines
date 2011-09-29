@@ -2,10 +2,8 @@ package com.shine.app.game.colorlines.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import com.shine.app.game.colorlines.action.FlashCell;

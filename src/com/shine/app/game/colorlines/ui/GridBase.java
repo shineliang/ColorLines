@@ -27,8 +27,8 @@ public class GridBase extends JPanel implements ISelectable {
 	private void init() {
 		this.setLayout(new GridLayout(UiConstants.ROW, UiConstants.COL, 0, 0));
 		Dimension dimension = new Dimension(UiConstants.CELL_WIDTH
-				* UiConstants.X_SIZE, UiConstants.CELL_HEIGHT
-				* UiConstants.Y_SIZE);
+				* UiConstants.COL, UiConstants.CELL_HEIGHT
+				* UiConstants.ROW);
 		this.setPreferredSize(dimension);
 		cellAction = new CellAction(this);
 		initCells();

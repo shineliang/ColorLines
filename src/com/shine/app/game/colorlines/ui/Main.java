@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		JFrame frame = new JFrame();
 		frame.setTitle("Color Lines");
-		frame.setSize(680, 680);
+		frame.setSize(480, 580);
 		ChessBoard chessBoard = ChessBoard.getInstance();
 		chessBoard.init();
 

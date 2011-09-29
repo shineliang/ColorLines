@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.shine.app.game.colorlines.algorithm.astar.PathFinderAdapter;
+import com.shine.app.game.colorlines.obj.ScoreRegister;
 import com.shine.app.game.colorlines.ui.Cell;
 import com.shine.app.game.colorlines.ui.CellType;
 import com.shine.app.game.colorlines.ui.GridBase;
@@ -101,18 +102,21 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 			List<Cell> cellList = new ArrayList<Cell>();
 			cellList.add(cell);
 
+			int xLines = 0;
+
 			List<Cell> xList = new ArrayList<Cell>();
 			for (int x = posX - 1, y = posY; x >= 0; --x) {
 				if (!calcSameCells(cell, xList, x, y))
 					break;
 			}
-			for (int x = posX + 1, y = posY; x < UiConstants.X_SIZE; ++x) {
+			for (int x = posX + 1, y = posY; x < UiConstants.COL; ++x) {
 				if (!calcSameCells(cell, xList, x, y))
 					break;
 			}
 			if (xList.size() >= 4) {
 				// find 5 in line
 				cellList.addAll(xList);
+				++xLines;
 			}
 
 			List<Cell> yList = new ArrayList<Cell>();
@@ -120,13 +124,14 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 				if (!calcSameCells(cell, yList, x, y))
 					break;
 			}
-			for (int x = posX, y = posY + 1; y < UiConstants.Y_SIZE; ++y) {
+			for (int x = posX, y = posY + 1; y < UiConstants.ROW; ++y) {
 				if (!calcSameCells(cell, yList, x, y))
 					break;
 			}
 			if (yList.size() >= 4) {
 				// find 5 in line
 				cellList.addAll(yList);
+				++xLines;
 			}
 
 			List<Cell> xy45List = new ArrayList<Cell>();
@@ -134,34 +139,37 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 				if (!calcSameCells(cell, xy45List, x, y))
 					break;
 			}
-			for (int x = posX + 1, y = posY + 1; x < UiConstants.X_SIZE
-					&& y < UiConstants.Y_SIZE; ++x, ++y) {
+			for (int x = posX + 1, y = posY + 1; x < UiConstants.COL
+					&& y < UiConstants.ROW; ++x, ++y) {
 				if (!calcSameCells(cell, xy45List, x, y))
 					break;
 			}
 			if (xy45List.size() >= 4) {
 				// find 5 in line
 				cellList.addAll(xy45List);
+				++xLines;
 			}
 
 			List<Cell> xy135List = new ArrayList<Cell>();
-			for (int x = posX - 1, y = posY + 1; x >= 0
-					&& y < UiConstants.Y_SIZE; --x, ++y) {
+			for (int x = posX - 1, y = posY + 1; x >= 0 && y < UiConstants.ROW; --x, ++y) {
 				if (!calcSameCells(cell, xy135List, x, y))
 					break;
 			}
-			for (int x = posX + 1, y = posY - 1; x < UiConstants.X_SIZE
-					&& y >= 0; ++x, --y) {
+			for (int x = posX + 1, y = posY - 1; x < UiConstants.COL && y >= 0; ++x, --y) {
 				if (!calcSameCells(cell, xy135List, x, y))
 					break;
 			}
 			if (xy135List.size() >= 4) {
 				// find 5 in line
 				cellList.addAll(xy135List);
+				++xLines;
 			}
 
 			if (cellList.size() > 1) {
 				cleanCells(cellList);
+				ScoreRegister.getInstance()
+						.getIScore(UiConstants.CURRENT_SCORE_NAME)
+						.passBallsInMultiLines(cellList.size(), xLines);
 			}
 
 		}

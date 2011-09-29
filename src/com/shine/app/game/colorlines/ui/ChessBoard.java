@@ -1,6 +1,11 @@
 package com.shine.app.game.colorlines.ui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
+
+import com.shine.app.game.colorlines.obj.ScoreRegister;
 
 public class ChessBoard extends JPanel {
 
@@ -11,6 +16,8 @@ public class ChessBoard extends JPanel {
 	private static ChessBoard instance = new ChessBoard();
 	private GridBase gridBase = null;
 	private QueuedGrid queuedGrid = null;
+	private BillBoard topScore = null;
+	private BillBoard currentScore = null;
 
 	private ChessBoard() {
 	}
@@ -20,13 +27,32 @@ public class ChessBoard extends JPanel {
 	}
 
 	public void init() {
-		if (queuedGrid == null) {
-			queuedGrid = new QueuedGrid();
-		}
-		this.add(queuedGrid);
+		JPanel panel = new JPanel();
+		Dimension dimension = new Dimension(UiConstants.CELL_WIDTH
+				* UiConstants.COL, UiConstants.CELL_HEIGHT);
+		panel.setPreferredSize(dimension);
+		panel.setLayout(new BorderLayout());
 
-		if (gridBase == null)
-			gridBase = new GridBase();
+		JPanel jPanel1 = new JPanel(new BorderLayout());
+		topScore = new BillBoard(ScoreRegister.getInstance().getIScore(
+				UiConstants.TOP_SCORE_NAME));
+		jPanel1.add(topScore, BorderLayout.SOUTH);
+		panel.add(jPanel1, BorderLayout.WEST);
+
+		JPanel jPanel3 = new JPanel();
+		queuedGrid = new QueuedGrid();
+		jPanel3.add(queuedGrid);
+		panel.add(jPanel3, BorderLayout.CENTER);
+
+		JPanel jPanel2 = new JPanel(new BorderLayout());
+		currentScore = new BillBoard(ScoreRegister.getInstance().getIScore(
+				UiConstants.CURRENT_SCORE_NAME));
+		jPanel2.add(currentScore, BorderLayout.SOUTH);
+		panel.add(jPanel2, BorderLayout.EAST);
+
+		this.add(panel);
+
+		gridBase = new GridBase();
 		this.add(gridBase);
 	}
 

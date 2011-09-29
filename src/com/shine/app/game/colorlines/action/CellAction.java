@@ -6,14 +6,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import com.shine.app.game.colorlines.algorithm.astar.PathFinderAdapter;
 import com.shine.app.game.colorlines.ui.Cell;
 import com.shine.app.game.colorlines.ui.CellType;
 import com.shine.app.game.colorlines.ui.GridBase;
 import com.shine.app.game.colorlines.ui.UiConstants;
-import com.shine.app.game.colorlines.util.CUtlity;
 
 public class CellAction implements ActionListener, PropertyChangeListener {
 
@@ -24,6 +22,10 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 	public CellAction(GridBase gridBase) {
 		this.gridBase = gridBase;
 		next = new PrepareNext();
+	}
+
+	public void prepareNext() {
+		next.prepareQueuedGrid();
 	}
 
 	@Override
@@ -48,21 +50,15 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 		List<Cell> path = new PathFinderAdapter().searchPath(from, to);
 		if (path != null && path.size() > 0) {
 			setSelectedCell(null);
-			CountDownLatch countdown = new CountDownLatch(1);
-			MoveCell move = new MoveCell(from, to, path, countdown);
+			MoveCell move = new MoveCell(from, to, path);
 			isNeedGenerateCells = true;
-			move.start();
-			try {
-				countdown.await();
-				System.out.println("countdown.await()");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			move.start(true);
 			// if need to add more cells to gridbase?
 			if (isNeedGenerateCells) {
 				System.out.println("isNeedGenerateCells is TRUE");
 				next.fillGridBase();
 				next = new PrepareNext();
+				next.prepareQueuedGrid();
 			}
 		}
 	}
@@ -88,9 +84,9 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 		if (source instanceof Cell && newVal instanceof CellType) {
 			Cell cell = (Cell) source;
 			CellType type = (CellType) newVal;
-			System.out.println(cell.getX() / UiConstants.CELL_WIDTH + ","
-					+ cell.getY() / UiConstants.CELL_HEIGHT + ":" + type + " ["
-					+ evt + "]");
+			// System.out.println(cell.getX() / UiConstants.CELL_WIDTH + ","
+			// + cell.getY() / UiConstants.CELL_HEIGHT + ":" + type + " ["
+			// + evt + "]");
 			if (type != CellType.T0) {
 				checkSameInLine(cell);
 			}
@@ -183,9 +179,9 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 
 	private void cleanCells(List<Cell> cellList) {
 		if (cellList != null) {
-			for (Cell cell : cellList) {
-				CUtlity.startThreadInPool(new FadeAway(cell, cell.getType()));
-			}
+			// for (Cell cell : cellList) {
+			// CUtlity.startThreadInPool(new FadeAway(cell, cell.getType()));
+			// }
 			for (Cell cell : cellList) {
 				cell.setType(CellType.T0);
 			}

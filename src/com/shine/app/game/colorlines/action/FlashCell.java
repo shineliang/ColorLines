@@ -1,11 +1,12 @@
 package com.shine.app.game.colorlines.action;
 
-import com.shine.app.game.colorlines.ui.CellType;
+import javax.swing.Icon;
+
 import com.shine.app.game.colorlines.ui.ITyper;
 
 public class FlashCell implements Runnable {
 
-	private static final int RELAX_INTERVAL = 200;
+	private static final int RELAX_INTERVAL = 50;
 	private ITyper cell = null;
 
 	private volatile Thread blinker;
@@ -18,22 +19,38 @@ public class FlashCell implements Runnable {
 	public void run() {
 		Thread currentThread = Thread.currentThread();
 		while (currentThread == blinker) {
-			cell.setIcon(CellType.T0.getImage());
-			if (cell.getType() == CellType.T0) {
-				break;
-			}
 			try {
-				Thread.sleep(RELAX_INTERVAL / 2);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Icon[] icons = cell.getType().getGradientImages();
+				for (int i = icons.length - 1; i >= 0; i--) {
+					cell.setIcon(icons[i]);
+					Thread.sleep(RELAX_INTERVAL);
+				}
+				for (int i = 1; i < icons.length; i++) {
+					cell.setIcon(icons[i]);
+					Thread.sleep(RELAX_INTERVAL);
+				}
+				cell.setIcon(cell.getType().getImage());
+
+			} catch (Exception e) {
+
 			}
-			// change the icon back
-			cell.setIcon(cell.getType().getImage());
-			try {
-				Thread.sleep(RELAX_INTERVAL);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+
+			// cell.setIcon(CellType.T0.getImage());
+			// if (cell.getType() == CellType.T0) {
+			// break;
+			// }
+			// try {
+			// Thread.sleep(RELAX_INTERVAL / 2);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
+			// // change the icon back
+			// cell.setIcon(cell.getType().getImage());
+			// try {
+			// Thread.sleep(RELAX_INTERVAL);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
 		}
 	}
 

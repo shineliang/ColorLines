@@ -20,35 +20,32 @@ public class MoveCell implements Runnable {
 		this.path = path;
 	}
 
-	public MoveCell(ITyper source, ITyper destination, List<Cell> path,
-			CountDownLatch doneSignal) {
-		this.src = source;
-		this.dest = destination;
-		this.path = path;
-		this.doneSignal = doneSignal;
-	}
-
 	@Override
 	public void run() {
 		CellType type = src.getType();
-		for (Cell cell : path) {
-			if (cell == src) {
-				cell.setType(CellType.T0);
-			} else if (cell == dest) {
-				cell.setType(type);
-			}
-		}
-		System.out.println("Move thread f:run() Done");
+		src.setType(CellType.T0);
+		dest.setType(type);
 		if (doneSignal != null) {
 			doneSignal.countDown();
 		}
 	}
 
-	public boolean start() {
+	public boolean start(boolean sync) {
 		boolean res = isValidCondition();
 		if (res) {
+			if (sync) {
+				doneSignal = new CountDownLatch(1);
+			} else {
+				doneSignal = null;
+			}
 			new Thread(this).start();
-			System.out.println("Move thread f:start() Done");
+			if (sync) {
+				try {
+					doneSignal.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return res;
 	}

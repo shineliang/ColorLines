@@ -3,6 +3,7 @@ package com.shine.app.game.colorlines.action;
 import java.util.Random;
 
 import com.shine.app.game.colorlines.ui.CellType;
+import com.shine.app.game.colorlines.ui.UiConstants;
 
 public class NextTypes {
 
@@ -29,7 +30,8 @@ public class NextTypes {
 	 * @return
 	 */
 	private CellType genetateType(Random random) {
-		int value = random.nextInt(totalValues.length - 1);
+		int color = Math.min(UiConstants.MAX_COLOR, totalValues.length - 1);
+		int value = random.nextInt(color);
 		return totalValues[value + 1];
 	}
 

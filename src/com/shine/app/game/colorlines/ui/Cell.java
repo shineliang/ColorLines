@@ -2,17 +2,16 @@ package com.shine.app.game.colorlines.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import com.shine.app.game.colorlines.action.FlashCell;
 
 public class Cell extends JButton implements ITyper {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -201838364196140660L;
 	private CellType type = null;
 	private FlashCell flasher = null;
@@ -48,6 +47,22 @@ public class Cell extends JButton implements ITyper {
 
 	@Override
 	public synchronized void setIcon(Icon defaultIcon) {
+		// if (defaultIcon instanceof ImageIcon) {
+		// Graphics graphics = getGraphics();
+		// graphics.setColor(getBackground());
+		// graphics.clearRect(0, 0, getWidth(), getHeight());
+		// graphics.drawRect(0, 0, getWidth(), getHeight());
+		// int height = UiConstants.CELL_HEIGHT / 2
+		// + UiConstants.CELL_IMAGE_HEIGHT / 2
+		// - defaultIcon.getIconHeight();
+		// graphics.drawImage(
+		// ((ImageIcon) defaultIcon).getImage(),
+		// (UiConstants.CELL_WIDTH - UiConstants.CELL_IMAGE_WIDTH) / 2,
+		// height, defaultIcon.getIconWidth(),
+		// defaultIcon.getIconHeight(), this);
+		// } else {
+		// super.setIcon(defaultIcon);
+		// }
 		super.setIcon(defaultIcon);
 	}
 

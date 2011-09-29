@@ -52,7 +52,7 @@ public class GridBase extends JPanel implements ISelectable {
 				this.add(cellsMap[row][col]);
 			}
 		}
-
+		cellAction.prepareNext();
 	}
 
 	public Cell getCell(int x, int y) {

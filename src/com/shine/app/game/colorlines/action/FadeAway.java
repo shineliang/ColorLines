@@ -36,7 +36,7 @@ public class FadeAway implements Runnable {
 		}
 		try {
 			cell.setIcon(type.getImage());
-			Thread.sleep(120);
+			Thread.sleep(200);
 			cell.setIcon(CellType.T0.getImage());
 		} catch (InterruptedException e) {
 			e.printStackTrace();

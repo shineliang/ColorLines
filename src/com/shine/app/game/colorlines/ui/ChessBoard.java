@@ -13,14 +13,13 @@ public class ChessBoard extends JPanel {
 	private QueuedGrid queuedGrid = null;
 
 	private ChessBoard() {
-		init();
 	}
 
 	public static ChessBoard getInstance() {
 		return instance;
 	}
 
-	private void init() {
+	public void init() {
 		if (queuedGrid == null) {
 			queuedGrid = new QueuedGrid();
 		}

@@ -16,6 +16,8 @@ public class ScoreKeeper extends Observable implements IScore {
 	@Override
 	public synchronized void setScore(int score) {
 		this.score = score;
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public class ScoreKeeper extends Observable implements IScore {
 			throw new InvalidBallNumberException();
 		}
 
-		addScore(number);
+		setScore(getScore() + addScore(number));
 	}
 
 	@Override
@@ -35,14 +37,10 @@ public class ScoreKeeper extends Observable implements IScore {
 		if (number < (xLines * 4 + 1))
 			throw new InvalidBallNumberException();
 
-		addScore(number);
+		setScore(getScore() + addScore(number) * xLines);
 	}
 
-	private void addScore(int number) {
-		synchronized (this) {
-			score += number * 2 + (number - 5) * (number - 5);
-		}
-		setChanged();
-		notifyObservers();
+	private int addScore(int number) {
+		return number * 2 + (number - 5) * (number - 5);
 	}
 }

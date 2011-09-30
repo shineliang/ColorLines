@@ -7,7 +7,7 @@ public interface UiConstants {
 	public static final int CELL_IMAGE_HEIGHT = 36;
 
 	public static final int LABEL_WIDTH = 70;
-	public static final int LABLE_HEIGHT = 30;
+	public static final int LABLE_HEIGHT = 25;
 
 	public static int ROW = 9;
 	public static int COL = 9;
@@ -18,4 +18,6 @@ public interface UiConstants {
 
 	public static final String TOP_SCORE_NAME = "top_score";
 	public static final String CURRENT_SCORE_NAME = "current_score";
+	public static final String GAME_OVER = "game_over";
+	public static final String RANK_LIST = "rank_list";
 }

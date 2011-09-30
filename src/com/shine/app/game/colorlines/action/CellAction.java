@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.shine.app.game.colorlines.algorithm.astar.PathFinderAdapter;
-import com.shine.app.game.colorlines.obj.ScoreRegister;
+import com.shine.app.game.colorlines.obj.IScore;
+import com.shine.app.game.colorlines.obj.NameRegister;
 import com.shine.app.game.colorlines.ui.Cell;
 import com.shine.app.game.colorlines.ui.CellType;
 import com.shine.app.game.colorlines.ui.GridBase;
@@ -56,7 +57,6 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 			move.start(true);
 			// if need to add more cells to gridbase?
 			if (isNeedGenerateCells) {
-				System.out.println("isNeedGenerateCells is TRUE");
 				next.fillGridBase();
 				next = new PrepareNext();
 				next.prepareQueuedGrid();
@@ -85,9 +85,6 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 		if (source instanceof Cell && newVal instanceof CellType) {
 			Cell cell = (Cell) source;
 			CellType type = (CellType) newVal;
-			// System.out.println(cell.getX() / UiConstants.CELL_WIDTH + ","
-			// + cell.getY() / UiConstants.CELL_HEIGHT + ":" + type + " ["
-			// + evt + "]");
 			if (type != CellType.T0) {
 				checkSameInLine(cell);
 			}
@@ -167,9 +164,12 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 
 			if (cellList.size() > 1) {
 				cleanCells(cellList);
-				ScoreRegister.getInstance()
-						.getIScore(UiConstants.CURRENT_SCORE_NAME)
-						.passBallsInMultiLines(cellList.size(), xLines);
+				Object score = NameRegister.getInstance().getObj(
+						UiConstants.CURRENT_SCORE_NAME);
+				if (score instanceof IScore) {
+					((IScore) score).passBallsInMultiLines(cellList.size(),
+							xLines);
+				}
 			}
 
 		}
@@ -187,14 +187,10 @@ public class CellAction implements ActionListener, PropertyChangeListener {
 
 	private void cleanCells(List<Cell> cellList) {
 		if (cellList != null) {
-			// for (Cell cell : cellList) {
-			// CUtlity.startThreadInPool(new FadeAway(cell, cell.getType()));
-			// }
 			for (Cell cell : cellList) {
 				cell.setType(CellType.T0);
 			}
 			isNeedGenerateCells = false;
-			System.out.println("set isNeedGenerateCells to FALSE");
 		}
 	}
 }

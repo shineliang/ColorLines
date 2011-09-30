@@ -5,7 +5,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import com.shine.app.game.colorlines.obj.ScoreRegister;
+import com.shine.app.game.colorlines.obj.IScore;
+import com.shine.app.game.colorlines.obj.NameRegister;
 
 public class ChessBoard extends JPanel {
 
@@ -34,8 +35,11 @@ public class ChessBoard extends JPanel {
 		panel.setLayout(new BorderLayout());
 
 		JPanel jPanel1 = new JPanel(new BorderLayout());
-		topScore = new BillBoard(ScoreRegister.getInstance().getIScore(
-				UiConstants.TOP_SCORE_NAME));
+		Object score = NameRegister.getInstance().getObj(
+				UiConstants.TOP_SCORE_NAME);
+		if (score instanceof IScore) {
+			topScore = new BillBoard((IScore) score);
+		}
 		jPanel1.add(topScore, BorderLayout.SOUTH);
 		panel.add(jPanel1, BorderLayout.WEST);
 
@@ -45,8 +49,11 @@ public class ChessBoard extends JPanel {
 		panel.add(jPanel3, BorderLayout.CENTER);
 
 		JPanel jPanel2 = new JPanel(new BorderLayout());
-		currentScore = new BillBoard(ScoreRegister.getInstance().getIScore(
-				UiConstants.CURRENT_SCORE_NAME));
+		score = NameRegister.getInstance().getObj(
+				UiConstants.CURRENT_SCORE_NAME);
+		if (score instanceof IScore) {
+			currentScore = new BillBoard((IScore) score);
+		}
 		jPanel2.add(currentScore, BorderLayout.SOUTH);
 		panel.add(jPanel2, BorderLayout.EAST);
 

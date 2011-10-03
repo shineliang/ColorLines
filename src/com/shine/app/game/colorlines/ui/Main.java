@@ -5,7 +5,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import com.shine.app.game.colorlines.action.PrepareNext;
 import com.shine.app.game.colorlines.obj.IGameOver;
 import com.shine.app.game.colorlines.obj.NameRegister;
 import com.shine.app.game.colorlines.obj.SystemStartup;
@@ -30,9 +29,9 @@ public class Main {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
-		SystemStartup.afterStartup();
+		frame.setJMenuBar(new MenuBase());
 
-		addCells();
+		SystemStartup.afterStartup();
 
 		frame.addWindowListener(new WindowAdapter() {
 
@@ -47,11 +46,6 @@ public class Main {
 
 		});
 
-	}
-
-	private static void addCells() throws InterruptedException {
-		new PrepareNext().fillGridBase();
-		new PrepareNext().fillGridBase();
 	}
 
 }

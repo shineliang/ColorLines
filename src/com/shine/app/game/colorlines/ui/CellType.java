@@ -1,29 +1,73 @@
 package com.shine.app.game.colorlines.ui;
 
 import java.awt.Image;
+import java.util.LinkedList;
+import java.util.Random;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import com.shine.app.game.colorlines.ui.exception.InvalidIconPathException;
 
-public enum CellType {
+public class CellType {
 
-	T0(null), T1("ball_001.png"), T2("ball_002.png"), T3("ball_003.png"), T4(
-			"ball_004.png"), T5("ball_005.png"), T6("ball_006.png"), T7(
-			"ball_007.png"), T8("ball_008.png"), T9("ball_009.png"), T10(
-			"ball_010.png"), T11("ball_011.png"), T12("ball_012.png"), T13(
-			"ball_013.png"), T14("ball_014.png");
-
+	public static final CellType T0 = new CellType(null);
+	private static CellType[] typeList = null;
+	private static int MAX_COLOR = 6;
 	private static final String pathPrefix = "skin/ball/";
 	private static double MIN_SIZE = 0.4;
 	private static int ICONS_SIZE = 3;
 	protected ImageIcon icon = null;
 	protected String filePath = null;
 	private Icon[] icons = null;
+	private static CellType[] totalType = null;
+	private static String[] fileList = { "ball_001.png", "ball_002.png",
+			"ball_003.png", "ball_004.png", "ball_005.png", "ball_006.png",
+			"ball_007.png", "ball_008.png", "ball_009.png", "ball_010.png",
+			"ball_011.png", "ball_012.png", "ball_013.png", "ball_014.png" };
 
 	private CellType(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public static CellType[] getTypeList() {
+		if (totalType == null) {
+			totalType = new CellType[fileList.length];
+			for (int i = 0; i < totalType.length; i++) {
+				totalType[i] = new CellType(fileList[i]);
+			}
+		}
+		if (typeList == null) {
+			initTypeList();
+		}
+		return typeList;
+	}
+
+	private static void initTypeList() {
+		LinkedList<Integer> ll = new LinkedList<Integer>();
+		for (int index = 0; index < fileList.length; index++) {
+			ll.add(index);
+		}
+		typeList = new CellType[getMaxColor()];
+		Random random = new Random();
+		for (int i = 0; i < typeList.length; i++) {
+			typeList[i] = generateType(random, ll);
+		}
+	}
+
+	public static int getMaxColor() {
+		return MAX_COLOR;
+	}
+
+	public static void setMaxColor(int maxColor) {
+		MAX_COLOR = maxColor;
+		initTypeList();
+	}
+
+	private static CellType generateType(Random random, LinkedList<Integer> ll) {
+		int index = random.nextInt(ll.size());
+		int val = ll.remove(index);
+		return totalType[val];
 	}
 
 	public Icon getImage() {
@@ -38,11 +82,9 @@ public enum CellType {
 				ImageIcon icon = new ImageIcon();
 				int height = (int) (UiConstants.CELL_IMAGE_HEIGHT * (MIN_SIZE + precent
 						* i));
-				icon.setImage(getIconImage()
-						.getImage()
-						.getScaledInstance(
-								UiConstants.CELL_IMAGE_WIDTH,
-								height, Image.SCALE_SMOOTH));
+				icon.setImage(getIconImage().getImage().getScaledInstance(
+						UiConstants.CELL_IMAGE_WIDTH, height,
+						Image.SCALE_SMOOTH));
 				icons[i] = icon;
 			}
 		}

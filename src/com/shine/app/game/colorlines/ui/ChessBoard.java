@@ -28,6 +28,8 @@ public class ChessBoard extends JPanel {
 	}
 
 	public void init() {
+		removeAll();
+
 		JPanel panel = new JPanel();
 		Dimension dimension = new Dimension(UiConstants.CELL_WIDTH
 				* UiConstants.COL, UiConstants.CELL_HEIGHT);

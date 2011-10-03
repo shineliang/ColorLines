@@ -14,8 +14,6 @@ public interface UiConstants {
 
 	public static int NEXT_CELL_NUMBER = 3;
 
-	public static int MAX_COLOR = 6;
-
 	public static final String TOP_SCORE_NAME = "top_score";
 	public static final String CURRENT_SCORE_NAME = "current_score";
 	public static final String GAME_OVER = "game_over";

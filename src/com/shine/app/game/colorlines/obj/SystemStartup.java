@@ -1,5 +1,6 @@
 package com.shine.app.game.colorlines.obj;
 
+import com.shine.app.game.colorlines.action.PrepareNext;
 import com.shine.app.game.colorlines.ui.UiConstants;
 
 public class SystemStartup {
@@ -30,5 +31,8 @@ public class SystemStartup {
 				topScore.setScore(0);
 			}
 		}
+
+		new PrepareNext().fillGridBase();
+		new PrepareNext().fillGridBase();
 	}
 }
